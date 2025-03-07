@@ -9,9 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
 import java.util.ArrayList;
 
 public class RadioButtonDialog extends DialogFragment {
@@ -23,8 +26,10 @@ public class RadioButtonDialog extends DialogFragment {
     private OnOptionSelectedListener listener;
     private ArrayList<String> optionsList;
     private String selectedValue;
+    private String dialogTitle;
 
-    public RadioButtonDialog(ArrayList<String> optionsList, String selectedValue) {
+    public RadioButtonDialog(String dialogTitle,ArrayList<String> optionsList, String selectedValue) {
+        this.dialogTitle = dialogTitle;
         this.optionsList = optionsList;
         this.selectedValue = selectedValue;
     }
@@ -44,11 +49,13 @@ public class RadioButtonDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_radio_button, container, false);
 
+        TextView tvTitle = view.findViewById(R.id.tvTitle);
         RadioGroup radioGroup = view.findViewById(R.id.radioGroup);
         Button btnCancel = view.findViewById(R.id.btnCancel);
         Button btnConfirm = view.findViewById(R.id.btnConfirm);
 
-        // ✅ 동적으로 라디오 버튼 추가
+        tvTitle.setText(dialogTitle);
+
         for (String option : optionsList) {
             RadioButton radioButton = new RadioButton(getContext());
             radioButton.setText(option);
@@ -60,10 +67,8 @@ public class RadioButtonDialog extends DialogFragment {
             }
         }
 
-        // ❌ 취소 버튼 클릭 시 다이얼로그 닫기
         btnCancel.setOnClickListener(v -> dismiss());
 
-        // ✅ 확인 버튼 클릭 시 선택한 값 전달 후 닫기
         btnConfirm.setOnClickListener(v -> {
             int checkedId = radioGroup.getCheckedRadioButtonId();
             if (checkedId != -1) {
@@ -87,4 +92,5 @@ public class RadioButtonDialog extends DialogFragment {
         }
     }
 }
+
 

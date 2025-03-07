@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity implements RadioButtonDialog
         // ✅ 팝업 버튼 클릭 시 다이얼로그 열기
         openPopupButton.setOnClickListener(v -> {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            RadioButtonDialog dialog = new RadioButtonDialog(optionsList, selectedValue);
+            String customTitle = "라디오 버튼 선택";
+            RadioButtonDialog dialog = new RadioButtonDialog(customTitle, optionsList, selectedValue);
             dialog.show(fragmentManager, "RadioButtonDialog");
         });
     }
